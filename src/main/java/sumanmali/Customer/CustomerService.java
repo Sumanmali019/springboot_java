@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import sumanmali.exception.DupicateEmailException;
+import sumanmali.exception.RequestValidException;
 import sumanmali.exception.ResourrceNotFoundException;
 
 @Service
@@ -44,5 +45,46 @@ public class CustomerService {
                 customerRestrationRequest.age());
         customerDAO.insertCustomer(customer);
 
+    }
+
+    public void deleteCustomerById(Integer customerId) {
+        if (!customerDAO.existPersonwithById(customerId)) {
+            throw new DupicateEmailException("Id [%s] not present".formatted(
+                    customerId));
+        }
+        customerDAO.deleteCustomer(customerId);
+    }
+
+    public Customer getCustomer(Integer id) {
+        return customerDAO.selectCustomerByID(id).orElseThrow(
+                () -> new ResourrceNotFoundException("Id [%s] not present".formatted(
+                        id)));
+    }
+
+    public void updateCustomer(Integer customerId, CustomerUpdateRequest updateRequest) {
+        Customer customer = getCustomer(customerId);
+
+        boolean change = false;
+
+        if (updateRequest.name() != null && !updateRequest.name().equals(customer.getName())) {
+            customer.setName(updateRequest.name());
+            change = true;
+        }
+
+        if (updateRequest.age() != null && !updateRequest.age().equals(customer.getAge())) {
+            customer.setAge(updateRequest.age());
+            change = true;
+        }
+        if (updateRequest.email() != null && !updateRequest.email().equals(customer.getEmail())) {
+            if (customerDAO.existPersonwithEmail(updateRequest.email())) {
+                throw new DupicateEmailException("email already taken");
+            }
+            customer.setEmail(updateRequest.email());
+            change = true;
+        }
+        if (!change) {
+            throw new RequestValidException("No data found");
+        }
+        customerDAO.updateCustomer(customer);
     }
 }

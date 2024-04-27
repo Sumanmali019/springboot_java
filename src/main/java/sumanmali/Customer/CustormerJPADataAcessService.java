@@ -35,4 +35,19 @@ public class CustormerJPADataAcessService implements CustomerDAO {
 
     }
 
+    @Override
+    public boolean existPersonwithById(Integer id) {
+        return customerReposerty.existsCustomerById(id);
+    }
+
+    @Override
+    public void deleteCustomer(Integer customerid) {
+        customerReposerty.deleteById(customerid);
+    }
+
+    @Override
+    public void updateCustomer(Customer update) {
+        customerReposerty.save(update);
+    }
+
 }
