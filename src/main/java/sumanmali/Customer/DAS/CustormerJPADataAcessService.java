@@ -1,9 +1,13 @@
-package sumanmali.Customer;
+package sumanmali.Customer.DAS;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
+
+import sumanmali.Customer.DAO.CustomerDAO;
+import sumanmali.Customer.model.Customer;
+import sumanmali.Customer.reposistory.CustomerReposerty;
 
 @Repository("jpa")
 public class CustormerJPADataAcessService implements CustomerDAO {

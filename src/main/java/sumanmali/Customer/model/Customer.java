@@ -1,4 +1,4 @@
-package sumanmali.Customer;
+package sumanmali.Customer.model;
 
 import java.util.Objects;
 

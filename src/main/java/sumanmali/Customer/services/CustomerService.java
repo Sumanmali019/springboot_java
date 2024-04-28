@@ -1,10 +1,14 @@
-package sumanmali.Customer;
+package sumanmali.Customer.services;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import sumanmali.Customer.DAO.CustomerDAO;
+import sumanmali.Customer.model.Customer;
+import sumanmali.Customer.model.update_request.CustomerUpdateRequest;
+import sumanmali.Customer.model.update_request.customerRestrationRequest;
 import sumanmali.exception.DupicateEmailException;
 import sumanmali.exception.RequestValidException;
 import sumanmali.exception.ResourrceNotFoundException;
@@ -63,14 +67,11 @@ public class CustomerService {
 
     public void updateCustomer(Integer customerId, CustomerUpdateRequest updateRequest) {
         Customer customer = getCustomer(customerId);
-
         boolean change = false;
-
         if (updateRequest.name() != null && !updateRequest.name().equals(customer.getName())) {
             customer.setName(updateRequest.name());
             change = true;
         }
-
         if (updateRequest.age() != null && !updateRequest.age().equals(customer.getAge())) {
             customer.setAge(updateRequest.age());
             change = true;

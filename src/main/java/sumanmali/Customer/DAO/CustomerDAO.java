@@ -1,7 +1,9 @@
-package sumanmali.Customer;
+package sumanmali.Customer.DAO;
 
 import java.util.List;
 import java.util.Optional;
+
+import sumanmali.Customer.model.Customer;
 
 public interface CustomerDAO {
 
